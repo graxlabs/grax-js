@@ -1,0 +1,1423 @@
+openapi: 3.0.3
+info:
+  title: GRAX API
+  version: 0.0.1
+paths:
+  /api/v1/backups/health:
+    get:
+      description: Get the health of Auto Backup.
+      operationId: backups_health_get
+      parameters:
+      - description: Maximum time behind before the backups are considered unhealthy,
+          in seconds.
+        in: query
+        name: maxBehind
+        schema:
+          description: Maximum time behind before the backups are considered unhealthy,
+            in seconds.
+          type: integer
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackupsHealth'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Get Auto Backup health
+      tags:
+      - Auto Backup
+  /api/v1/salesforce/{orgID}/deletions:
+    get:
+      operationId: deletions_list
+      parameters:
+      - description: Minimum created time, inclusive.
+        in: query
+        name: min
+        schema:
+          description: Minimum created time, inclusive.
+          format: date-time
+          type: string
+      - description: Maximum created time, exclusive.
+        in: query
+        name: max
+        schema:
+          description: Maximum created time, exclusive.
+          format: date-time
+          type: string
+      - description: Object name. If provided, only deletions for this object will
+          be returned.
+        in: query
+        name: object
+        schema:
+          description: Object name. If provided, only deletions for this object will
+            be returned.
+          type: string
+      - description: Maximum number of results to return per page.
+        in: query
+        name: pageSize
+        schema:
+          description: Maximum number of results to return per page.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List Delete Forever deletions
+      tags:
+      - Delete Forever
+  /api/v1/salesforce/{orgID}/deletions/{id}:
+    get:
+      operationId: deletion_get
+      parameters:
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deletion'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Get Delete Forever deletion
+      tags:
+      - Delete Forever
+  /api/v1/salesforce/{orgID}/deletions/{id}/records:
+    get:
+      operationId: deletion_records_list
+      parameters:
+      - description: Maximum number of results to return per page.
+        in: query
+        name: pageSize
+        schema:
+          description: Maximum number of results to return per page.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletionRecordsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List Delete Forever deletion records
+      tags:
+      - Delete Forever
+  /api/v1/salesforce/{orgID}/objects/{object}/lock:
+    post:
+      operationId: records_lock
+      parameters:
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: object
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                ids:
+                  items:
+                    $ref: '#/components/schemas/RecordLockID'
+                  nullable: true
+                  type: array
+              type: object
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Lock multiple records
+      tags:
+      - Record Lock
+  /api/v1/salesforce/{orgID}/objects/{object}/records/{id}/lock:
+    delete:
+      operationId: record_unlock
+      parameters:
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: object
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Unlock single record
+      tags:
+      - Record Lock
+    get:
+      operationId: record_lock_get
+      parameters:
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: object
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordLock'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Get record lock
+      tags:
+      - Record Lock
+    post:
+      operationId: record_lock
+      parameters:
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: object
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Lock single record
+      tags:
+      - Record Lock
+  /api/v1/salesforce/{orgID}/objects/{object}/records/{id}/versions/{mod}/children:
+    get:
+      operationId: record_children_list
+      parameters:
+      - description: The child object to list.
+        in: query
+        name: object
+        schema:
+          description: The child object to list.
+          type: string
+      - description: The fields to include in the response. Can be 'all' for all fields,
+          'name' for the name field, or a comma separated list of field names.
+        in: query
+        name: fields
+        schema:
+          description: The fields to include in the response. Can be 'all' for all
+            fields, 'name' for the name field, or a comma separated list of field
+            names.
+          type: string
+      - description: The delete source to filter by, can be 'any', 'grax' or 'salesforce'.
+        in: query
+        name: deleteSource
+        schema:
+          description: The delete source to filter by, can be 'any', 'grax' or 'salesforce'.
+          type: string
+      - description: Maximum number of results to return per page.
+        in: query
+        name: pageSize
+        schema:
+          description: Maximum number of results to return per page.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: object
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: mod
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordChildrenPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List record children
+      tags:
+      - Records
+  /api/v1/salesforce/{orgID}/objects/{object}/unlock:
+    post:
+      operationId: records_unlock
+      parameters:
+      - in: path
+        name: orgID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: object
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                ids:
+                  items:
+                    type: string
+                  nullable: true
+                  type: array
+              type: object
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Unlock multiple records
+      tags:
+      - Record Lock
+  /api/v2/objects:
+    get:
+      operationId: objects_list
+      parameters:
+      - description: Maximum number of items to return per page. Fewer or zero may
+          be returned.
+        in: query
+        name: maxItems
+        schema:
+          description: Maximum number of items to return per page. Fewer or zero may
+            be returned.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List objects
+      tags:
+      - Objects
+  /api/v2/objects/{object}/records/{id}:
+    get:
+      operationId: record_get
+      parameters:
+      - description: Fields to include in the response. Can be 'all' for all fields,
+          'name' for the name field, or a comma separated list of field names.
+        in: query
+        name: fields
+        schema:
+          description: Fields to include in the response. Can be 'all' for all fields,
+            'name' for the name field, or a comma separated list of field names.
+          type: string
+      - description: Object name.
+        in: path
+        name: object
+        required: true
+        schema:
+          description: Object name.
+          type: string
+      - description: ID of the record.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: ID of the record.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Get record
+      tags:
+      - Records
+  /api/v2/objects/{object}/records/{id}/versions:
+    get:
+      operationId: record_versions_list
+      parameters:
+      - description: Fields to include in the response. Can be 'all' for all fields,
+          'name' for the name field, or a comma separated list of field names.
+        in: query
+        name: fields
+        schema:
+          description: Fields to include in the response. Can be 'all' for all fields,
+            'name' for the name field, or a comma separated list of field names.
+          type: string
+      - description: Maximum number of items to return per page. Fewer or zero may
+          be returned.
+        in: query
+        name: maxItems
+        schema:
+          description: Maximum number of items to return per page. Fewer or zero may
+            be returned.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - description: Object name.
+        in: path
+        name: object
+        required: true
+        schema:
+          description: Object name.
+          type: string
+      - description: ID of the record.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: ID of the record.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordVersionsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List record versions
+      tags:
+      - Records
+  /api/v2/searches:
+    get:
+      operationId: searches_list
+      parameters:
+      - description: Maximum number of items to return per page. Fewer or zero may
+          be returned.
+        in: query
+        name: maxItems
+        schema:
+          description: Maximum number of items to return per page. Fewer or zero may
+            be returned.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchesPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List searches
+      tags:
+      - Search
+    post:
+      operationId: search_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchCreate'
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Search'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Create search
+      tags:
+      - Search
+  /api/v2/searches/{id}:
+    delete:
+      operationId: search_delete
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "204":
+          description: No Content
+      security:
+      - bearer_token: []
+      summary: Delete search
+      tags:
+      - Search
+    get:
+      operationId: search_get
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Search'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Get search
+      tags:
+      - Search
+  /api/v2/searches/{id}/abort:
+    post:
+      operationId: search_abort
+      parameters:
+      - description: ID of the search job.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: ID of the search job.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "204":
+          description: No Content
+      security:
+      - bearer_token: []
+      summary: Abort search
+      tags:
+      - Search
+  /api/v2/searches/{id}/download:
+    get:
+      operationId: search_download
+      parameters:
+      - description: Fields to include in the response. If not specified, all fields
+          are included.
+        in: query
+        name: fields
+        schema:
+          description: Fields to include in the response. If not specified, all fields
+            are included.
+          type: string
+      - description: Whether to download the latest version of each record.
+        in: query
+        name: latest
+        schema:
+          description: Whether to download the latest version of each record.
+          type: boolean
+      - description: ID of the search job.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: ID of the search job.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Download search results
+      tags:
+      - Search
+  /api/v2/searches/{id}/records:
+    get:
+      operationId: search_records
+      parameters:
+      - description: Fields to include in the response. Can be 'all' for all fields,
+          'name' for the name field, or a comma separated list of field names.
+        in: query
+        name: fields
+        schema:
+          description: Fields to include in the response. Can be 'all' for all fields,
+            'name' for the name field, or a comma separated list of field names.
+          type: string
+      - description: Search records in reverse order.
+        in: query
+        name: reverse
+        schema:
+          description: Search records in reverse order.
+          type: boolean
+      - description: Minimum record time to include in the response.
+        in: query
+        name: minTime
+        schema:
+          description: Minimum record time to include in the response.
+          format: date-time
+          type: string
+      - description: Maximum number of items to return per page. Fewer or zero may
+          be returned.
+        in: query
+        name: maxItems
+        schema:
+          description: Maximum number of items to return per page. Fewer or zero may
+            be returned.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - description: ID of the search job.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: ID of the search job.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchRecordsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Read search result records
+      tags:
+      - Search
+components:
+  schemas:
+    AuditUser:
+      properties:
+        email:
+          description: The email of the user.
+          type: string
+        id:
+          description: The ID of the user.
+          type: string
+        name:
+          description: The username of the user.
+          type: string
+      type: object
+    BackupsHealth:
+      properties:
+        status:
+          enum:
+          - ok
+          - warning
+          - error
+          - unknown
+          type: string
+      type: object
+    ChildRecord:
+      properties:
+        deleteSource:
+          description: The delete source of the record, if it has been deleted. Can
+            be 'grax' or 'salesforce'.
+          type: string
+        deletedAt:
+          description: The time the record was deleted, if it has been deleted.
+          format: date-time
+          type: string
+        fields:
+          additionalProperties:
+            type: string
+          description: The fields of the record, if requested.
+          type: object
+        id:
+          description: The ID of the record.
+          type: string
+        modifiedAt:
+          description: The time the record was last modified.
+          format: date-time
+          type: string
+        name:
+          description: The name of the record, if requested.
+          type: string
+        object:
+          description: The object of the record.
+          type: string
+        salesforceURL:
+          description: The Salesforce URL of the record.
+          type: string
+      type: object
+    Deletion:
+      properties:
+        caller:
+          $ref: '#/components/schemas/DeletionCaller'
+        cascade:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        forceCascadeObjects:
+          items:
+            type: string
+          type: array
+        id:
+          type: string
+        object:
+          type: string
+        skipDeletedCheck:
+          type: boolean
+      type: object
+    DeletionCaller:
+      properties:
+        headers:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        remoteAddr:
+          type: string
+        userID:
+          type: string
+      type: object
+    DeletionRecord:
+      properties:
+        id:
+          type: string
+        modifiedAt:
+          format: date-time
+          type: string
+        object:
+          type: string
+        purgedAt:
+          format: date-time
+          type: string
+      type: object
+    DeletionRecordsPage:
+      properties:
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        records:
+          items:
+            $ref: '#/components/schemas/DeletionRecord'
+          nullable: true
+          type: array
+      type: object
+    DeletionsPage:
+      properties:
+        deletions:
+          items:
+            $ref: '#/components/schemas/Deletion'
+          nullable: true
+          type: array
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+      type: object
+    Error:
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorBody'
+      type: object
+    ErrorBody:
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      type: object
+    Object:
+      properties:
+        label:
+          description: Object label.
+          type: string
+        name:
+          description: Object name.
+          type: string
+      type: object
+    ObjectsPage:
+      properties:
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        objects:
+          description: Objects.
+          items:
+            $ref: '#/components/schemas/Object'
+          type: array
+      type: object
+    Record:
+      properties:
+        deleted:
+          $ref: '#/components/schemas/RecordDeleted'
+        fields:
+          description: Record fields.
+          items:
+            $ref: '#/components/schemas/RecordField'
+          type: array
+        id:
+          description: Record ID.
+          type: string
+        modified:
+          description: Time the record was modified.
+          format: date-time
+          type: string
+        name:
+          description: Record name.
+          type: string
+        object:
+          description: Object name.
+          type: string
+        purged:
+          $ref: '#/components/schemas/RecordPurged'
+        restoredFrom:
+          $ref: '#/components/schemas/RecordRestoredFrom'
+        salesforceURL:
+          description: Salesforce URL for the record.
+          type: string
+      type: object
+    RecordChildrenPage:
+      properties:
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        records:
+          items:
+            $ref: '#/components/schemas/ChildRecord'
+          nullable: true
+          type: array
+      type: object
+    RecordDeleted:
+      properties:
+        activityID:
+          description: ID of the activity that deleted the record.
+          type: string
+        source:
+          description: Source of the delete.
+          enum:
+          - grax
+          - source
+          type: string
+        time:
+          description: Time the record was deleted.
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/AuditUser'
+      type: object
+    RecordField:
+      properties:
+        name:
+          description: Field name.
+          type: string
+        value:
+          description: Field value.
+          type: string
+      type: object
+    RecordLock:
+      properties:
+        locked:
+          description: Time the record was locked. If not present, the record is not
+            locked.
+          format: date-time
+          type: string
+        lockedID:
+          description: ID of the record causing this record to be locked
+          type: string
+        note:
+          description: Note about the lock
+          type: string
+        userID:
+          description: ID of the user who locked the record
+          type: string
+      type: object
+    RecordLockID:
+      properties:
+        id:
+          type: string
+        note:
+          type: string
+      type: object
+    RecordPurged:
+      properties:
+        activityID:
+          description: ID of the activity that purged the record.
+          type: string
+        time:
+          description: Time the record was purged.
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/AuditUser'
+      type: object
+    RecordRestoredFrom:
+      properties:
+        activityID:
+          description: Activity ID that restored the record.
+          type: string
+        added:
+          description: Added time of the new record.
+          format: date-time
+          type: string
+        id:
+          description: ID of the original record.
+          type: string
+        modified:
+          description: Modified time of the original record.
+          format: date-time
+          type: string
+        user:
+          $ref: '#/components/schemas/AuditUser'
+      type: object
+    RecordVersionsPage:
+      properties:
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        records:
+          description: Record versions.
+          items:
+            $ref: '#/components/schemas/Record'
+          type: array
+      type: object
+    Search:
+      properties:
+        created:
+          description: Time the search job was created.
+          format: date-time
+          type: string
+        deleting:
+          description: Time the search will be automatically deleted if its results
+            are not accessed.
+          format: date-time
+          type: string
+        filterStatus:
+          description: Status of the records to search.
+          type: string
+        filters:
+          $ref: '#/components/schemas/SearchFilters'
+        id:
+          description: ID of the search job.
+          type: string
+        limits:
+          $ref: '#/components/schemas/SearchLimits'
+        name:
+          description: Name of the search job.
+          type: string
+        object:
+          description: Object searched.
+          type: string
+        progress:
+          description: Progress of the search job.
+          type: number
+        recordsFound:
+          description: Number of records found.
+          type: integer
+        recordsScanned:
+          description: Number of records scanned.
+          type: integer
+        recordsTimeFirst:
+          description: Time of the first found record.
+          format: date-time
+          type: string
+        recordsTimeLast:
+          description: Time of the last found record.
+          format: date-time
+          type: string
+        reverse:
+          description: Whether records were searched in reverse order.
+          type: boolean
+        status:
+          description: Status of the search job.
+          type: string
+        timeField:
+          description: Time field used for the search. Can be 'createdAt', 'modifiedAt',
+            'latestModifiedAt', 'rangeLatestModifiedAt', 'allModifiedAt', 'deletedAt'
+            or 'purgedAt'.
+          type: string
+        timeFieldMax:
+          description: Maximum time for the search.
+          format: date-time
+          type: string
+        timeFieldMin:
+          description: Minimum time for the search.
+          format: date-time
+          type: string
+        updated:
+          description: Time the search job was last updated.
+          format: date-time
+          type: string
+      type: object
+    SearchCreate:
+      properties:
+        filters:
+          $ref: '#/components/schemas/SearchFilters'
+        limits:
+          $ref: '#/components/schemas/SearchLimits'
+        notify:
+          description: Whether to notify when the search is complete.
+          type: boolean
+        object:
+          description: Object to search.
+          type: string
+        reverse:
+          description: Whether to search in reverse order.
+          type: boolean
+        status:
+          description: Status of the records to search.
+          type: string
+        timeField:
+          description: Time field to search. Can be 'createdAt', 'modifiedAt', 'latestModifiedAt',
+            'rangeLatestModifiedAt', 'allModifiedAt', 'deletedAt' or 'purgedAt'. Defaults
+            to 'createdAt'.
+          type: string
+        timeFieldMax:
+          description: Maximum time for the search.
+          format: date-time
+          type: string
+        timeFieldMin:
+          description: Minimum time for the search.
+          format: date-time
+          type: string
+      type: object
+    SearchFieldFilter:
+      properties:
+        field:
+          type: string
+        filterType:
+          type: string
+        not:
+          type: boolean
+        value:
+          type: string
+      type: object
+    SearchFilters:
+      properties:
+        children:
+          description: Child filters.
+          items:
+            $ref: '#/components/schemas/SearchFilters'
+          type: array
+        fields:
+          description: Field filters.
+          items:
+            $ref: '#/components/schemas/SearchFieldFilter'
+          type: array
+        mode:
+          description: Mode of the filter. 'and' requires all child and field filters
+            match, 'or' only requires one.
+          enum:
+          - and
+          - or
+          type: string
+      type: object
+    SearchLimits:
+      properties:
+        results:
+          description: Stop search after this many results are found.
+          type: integer
+      type: object
+    SearchRecord:
+      properties:
+        created:
+          description: Time the record was created.
+          format: date-time
+          type: string
+        deleted:
+          $ref: '#/components/schemas/RecordDeleted'
+        fields:
+          description: Record fields.
+          items:
+            $ref: '#/components/schemas/RecordField'
+          type: array
+        id:
+          description: Record ID.
+          type: string
+        modified:
+          description: Time the record was modified.
+          format: date-time
+          type: string
+        name:
+          description: Record name.
+          type: string
+        purged:
+          $ref: '#/components/schemas/RecordPurged'
+        restoredFrom:
+          $ref: '#/components/schemas/RecordRestoredFrom'
+        salesforceURL:
+          description: Salesforce URL for the record.
+          type: string
+      type: object
+    SearchRecordsPage:
+      properties:
+        nextContinuePageToken:
+          description: Token to retrieve the next page of running search results.
+          type: string
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        records:
+          items:
+            $ref: '#/components/schemas/SearchRecord'
+          type: array
+      type: object
+    SearchesPage:
+      properties:
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        searches:
+          items:
+            $ref: '#/components/schemas/Search'
+          type: array
+      type: object
+  securitySchemes:
+    bearer_token:
+      bearerFormat: GRAX Token
+      description: Token generated from the Settings > API Tokens section of the GRAX
+        web app.
+      scheme: bearer
+      type: http
