@@ -20,7 +20,12 @@ var GraxApi = require('grax_api');
 var defaultClient = GraxApi.ApiClient.instance;
 // Configure Bearer (GRAX Token) access token for authorization: bearer_token
 var bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
+// GRAX URL
+defaultClient.basePath = process.env.GRAX_URL;
+
+// GRAX TOKEN
+bearer_token.accessToken = process.env.GRAX_TOKEN;
 
 var api = new GraxApi.AutoBackupApi()
 var opts = {
