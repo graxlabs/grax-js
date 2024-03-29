@@ -199,7 +199,7 @@ export default class SearchApi {
       let authNames = ['bearer_token'];
       let contentTypes = [];
       let accepts = ['application/json', 'application/zip'];
-      let returnType = File;
+      let returnType = 'Blob';
       return this.apiClient.callApi(
         '/api/v2/searches/{id}/download', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
