@@ -1,6 +1,6 @@
 # GraxApi.RecordLockApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,28 +10,24 @@ Method | HTTP request | Description
 [**recordsLock**](RecordLockApi.md#recordsLock) | **POST** /api/v1/salesforce/{orgID}/objects/{object}/lock | Lock multiple records
 [**recordsUnlock**](RecordLockApi.md#recordsUnlock) | **POST** /api/v1/salesforce/{orgID}/objects/{object}/unlock | Unlock multiple records
 
-
-
-## recordLock
-
-> recordLock(orgID, object, id)
+<a name="recordLock"></a>
+# **recordLock**
+> recordLock(orgID, _object, id)
 
 Lock single record
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.RecordLockApi();
 let orgID = "orgID_example"; // String | 
-let object = "object_example"; // String | 
+let _object = "_object_example"; // String | 
 let id = "id_example"; // String | 
-apiInstance.recordLock(orgID, object, id, (error, data, response) => {
+
+apiInstance.recordLock(orgID, _object, id, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -42,11 +38,10 @@ apiInstance.recordLock(orgID, object, id, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgID** | **String**|  | 
- **object** | **String**|  | 
+ **_object** | **String**|  | 
  **id** | **String**|  | 
 
 ### Return type
@@ -59,30 +54,27 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## recordLockGet
-
-> RecordLock recordLockGet(orgID, object, id)
+<a name="recordLockGet"></a>
+# **recordLockGet**
+> RecordLock recordLockGet(orgID, _object, id)
 
 Get record lock
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.RecordLockApi();
 let orgID = "orgID_example"; // String | 
-let object = "object_example"; // String | 
+let _object = "_object_example"; // String | 
 let id = "id_example"; // String | 
-apiInstance.recordLockGet(orgID, object, id, (error, data, response) => {
+
+apiInstance.recordLockGet(orgID, _object, id, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -93,11 +85,10 @@ apiInstance.recordLockGet(orgID, object, id, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgID** | **String**|  | 
- **object** | **String**|  | 
+ **_object** | **String**|  | 
  **id** | **String**|  | 
 
 ### Return type
@@ -110,30 +101,27 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## recordUnlock
-
-> recordUnlock(orgID, object, id)
+<a name="recordUnlock"></a>
+# **recordUnlock**
+> recordUnlock(orgID, _object, id)
 
 Unlock single record
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.RecordLockApi();
 let orgID = "orgID_example"; // String | 
-let object = "object_example"; // String | 
+let _object = "_object_example"; // String | 
 let id = "id_example"; // String | 
-apiInstance.recordUnlock(orgID, object, id, (error, data, response) => {
+
+apiInstance.recordUnlock(orgID, _object, id, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -144,11 +132,10 @@ apiInstance.recordUnlock(orgID, object, id, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgID** | **String**|  | 
- **object** | **String**|  | 
+ **_object** | **String**|  | 
  **id** | **String**|  | 
 
 ### Return type
@@ -161,32 +148,28 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## recordsLock
-
-> recordsLock(orgID, object, opts)
+<a name="recordsLock"></a>
+# **recordsLock**
+> recordsLock(orgID, _object, opts)
 
 Lock multiple records
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.RecordLockApi();
 let orgID = "orgID_example"; // String | 
-let object = "object_example"; // String | 
-let opts = {
-  'recordsLockRequest': new GraxApi.RecordsLockRequest() // RecordsLockRequest | 
+let _object = "_object_example"; // String | 
+let opts = { 
+  'body': new GraxApi.ObjectLockBody() // ObjectLockBody | 
 };
-apiInstance.recordsLock(orgID, object, opts, (error, data, response) => {
+apiInstance.recordsLock(orgID, _object, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -197,12 +180,11 @@ apiInstance.recordsLock(orgID, object, opts, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgID** | **String**|  | 
- **object** | **String**|  | 
- **recordsLockRequest** | [**RecordsLockRequest**](RecordsLockRequest.md)|  | [optional] 
+ **_object** | **String**|  | 
+ **body** | [**ObjectLockBody**](ObjectLockBody.md)|  | [optional] 
 
 ### Return type
 
@@ -214,32 +196,28 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
-
-## recordsUnlock
-
-> recordsUnlock(orgID, object, opts)
+<a name="recordsUnlock"></a>
+# **recordsUnlock**
+> recordsUnlock(orgID, _object, opts)
 
 Unlock multiple records
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.RecordLockApi();
 let orgID = "orgID_example"; // String | 
-let object = "object_example"; // String | 
-let opts = {
-  'recordsUnlockRequest': new GraxApi.RecordsUnlockRequest() // RecordsUnlockRequest | 
+let _object = "_object_example"; // String | 
+let opts = { 
+  'body': new GraxApi.ObjectUnlockBody() // ObjectUnlockBody | 
 };
-apiInstance.recordsUnlock(orgID, object, opts, (error, data, response) => {
+apiInstance.recordsUnlock(orgID, _object, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -250,12 +228,11 @@ apiInstance.recordsUnlock(orgID, object, opts, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgID** | **String**|  | 
- **object** | **String**|  | 
- **recordsUnlockRequest** | [**RecordsUnlockRequest**](RecordsUnlockRequest.md)|  | [optional] 
+ **_object** | **String**|  | 
+ **body** | [**ObjectUnlockBody**](ObjectUnlockBody.md)|  | [optional] 
 
 ### Return type
 
@@ -267,6 +244,6 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 

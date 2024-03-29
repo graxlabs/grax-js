@@ -1,15 +1,13 @@
 # GraxApi.AutoBackupApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**backupsHealthGet**](AutoBackupApi.md#backupsHealthGet) | **GET** /api/v1/backups/health | Get Auto Backup health
 
-
-
-## backupsHealthGet
-
+<a name="backupsHealthGet"></a>
+# **backupsHealthGet**
 > BackupsHealth backupsHealthGet(opts)
 
 Get Auto Backup health
@@ -17,16 +15,13 @@ Get Auto Backup health
 Get the health of Auto Backup.
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.AutoBackupApi();
-let opts = {
+let opts = { 
   'maxBehind': 56 // Number | Maximum time behind before the backups are considered unhealthy, in seconds.
 };
 apiInstance.backupsHealthGet(opts, (error, data, response) => {
@@ -39,7 +34,6 @@ apiInstance.backupsHealthGet(opts, (error, data, response) => {
 ```
 
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -55,6 +49,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 

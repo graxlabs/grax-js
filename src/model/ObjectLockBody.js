@@ -13,41 +13,41 @@
  *
  */
 import ApiClient from '../ApiClient';
-import ErrorBody from './ErrorBody';
+import RecordLockID from './RecordLockID';
 
 /**
- * The Error model module.
- * @module model/Error
+ * The ObjectLockBody model module.
+ * @module model/ObjectLockBody
  * @version 0.0.1
  */
-export default class Error {
+export default class ObjectLockBody {
   /**
-   * Constructs a new <code>Error</code>.
-   * @alias module:model/Error
+   * Constructs a new <code>ObjectLockBody</code>.
+   * @alias module:model/ObjectLockBody
    * @class
    */
   constructor() {
   }
 
   /**
-   * Constructs a <code>Error</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>ObjectLockBody</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/Error} obj Optional instance to populate.
-   * @return {module:model/Error} The populated <code>Error</code> instance.
+   * @param {module:model/ObjectLockBody} obj Optional instance to populate.
+   * @return {module:model/ObjectLockBody} The populated <code>ObjectLockBody</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new Error();
-      if (data.hasOwnProperty('error'))
-        obj.error = ErrorBody.constructFromObject(data['error']);
+      obj = obj || new ObjectLockBody();
+      if (data.hasOwnProperty('ids'))
+        obj.ids = ApiClient.convertToType(data['ids'], [RecordLockID]);
     }
     return obj;
   }
 }
 
 /**
- * @member {module:model/ErrorBody} error
+ * @member {Array.<module:model/RecordLockID>} ids
  */
-Error.prototype.error = undefined;
+ObjectLockBody.prototype.ids = undefined;
 

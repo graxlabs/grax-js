@@ -1,7 +1,6 @@
 # GraxApi.SearchRecord
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **created** | **Date** | Time the record was created. | [optional] 
@@ -13,5 +12,3 @@ Name | Type | Description | Notes
 **purged** | [**RecordPurged**](RecordPurged.md) |  | [optional] 
 **restoredFrom** | [**RecordRestoredFrom**](RecordRestoredFrom.md) |  | [optional] 
 **salesforceURL** | **String** | Salesforce URL for the record. | [optional] 
-
-

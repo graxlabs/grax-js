@@ -1,7 +1,6 @@
 # GraxApi.Deletion
 
 ## Properties
-
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **caller** | [**DeletionCaller**](DeletionCaller.md) |  | [optional] 
@@ -9,7 +8,5 @@ Name | Type | Description | Notes
 **createdAt** | **Date** |  | [optional] 
 **forceCascadeObjects** | **[String]** |  | [optional] 
 **id** | **String** |  | [optional] 
-**object** | **String** |  | [optional] 
+**_object** | **String** |  | [optional] 
 **skipDeletedCheck** | **Boolean** |  | [optional] 
-
-

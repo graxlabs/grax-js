@@ -13,41 +13,40 @@
  *
  */
 import ApiClient from '../ApiClient';
-import ErrorBody from './ErrorBody';
 
 /**
- * The Error model module.
- * @module model/Error
+ * The ObjectUnlockBody model module.
+ * @module model/ObjectUnlockBody
  * @version 0.0.1
  */
-export default class Error {
+export default class ObjectUnlockBody {
   /**
-   * Constructs a new <code>Error</code>.
-   * @alias module:model/Error
+   * Constructs a new <code>ObjectUnlockBody</code>.
+   * @alias module:model/ObjectUnlockBody
    * @class
    */
   constructor() {
   }
 
   /**
-   * Constructs a <code>Error</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>ObjectUnlockBody</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/Error} obj Optional instance to populate.
-   * @return {module:model/Error} The populated <code>Error</code> instance.
+   * @param {module:model/ObjectUnlockBody} obj Optional instance to populate.
+   * @return {module:model/ObjectUnlockBody} The populated <code>ObjectUnlockBody</code> instance.
    */
   static constructFromObject(data, obj) {
     if (data) {
-      obj = obj || new Error();
-      if (data.hasOwnProperty('error'))
-        obj.error = ErrorBody.constructFromObject(data['error']);
+      obj = obj || new ObjectUnlockBody();
+      if (data.hasOwnProperty('ids'))
+        obj.ids = ApiClient.convertToType(data['ids'], ['String']);
     }
     return obj;
   }
 }
 
 /**
- * @member {module:model/ErrorBody} error
+ * @member {Array.<String>} ids
  */
-Error.prototype.error = undefined;
+ObjectUnlockBody.prototype.ids = undefined;
 

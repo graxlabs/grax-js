@@ -1,6 +1,6 @@
 # GraxApi.SearchApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -12,25 +12,21 @@ Method | HTTP request | Description
 [**searchRecords**](SearchApi.md#searchRecords) | **GET** /api/v2/searches/{id}/records | Read search result records
 [**searchesList**](SearchApi.md#searchesList) | **GET** /api/v2/searches | List searches
 
-
-
-## searchAbort
-
+<a name="searchAbort"></a>
+# **searchAbort**
 > searchAbort(id)
 
 Abort search
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
 let id = "id_example"; // String | ID of the search job.
+
 apiInstance.searchAbort(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -41,7 +37,6 @@ apiInstance.searchAbort(id, (error, data, response) => {
 ```
 
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -57,28 +52,24 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## searchCreate
-
+<a name="searchCreate"></a>
+# **searchCreate**
 > Search searchCreate(opts)
 
 Create search
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
-let opts = {
-  'searchCreate': new GraxApi.SearchCreate() // SearchCreate | 
+let opts = { 
+  'body': new GraxApi.SearchCreate() // SearchCreate | 
 };
 apiInstance.searchCreate(opts, (error, data, response) => {
   if (error) {
@@ -91,10 +82,9 @@ apiInstance.searchCreate(opts, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **searchCreate** | [**SearchCreate**](SearchCreate.md)|  | [optional] 
+ **body** | [**SearchCreate**](SearchCreate.md)|  | [optional] 
 
 ### Return type
 
@@ -106,27 +96,24 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
-
-## searchDelete
-
+<a name="searchDelete"></a>
+# **searchDelete**
 > searchDelete(id)
 
 Delete search
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
 let id = "id_example"; // String | 
+
 apiInstance.searchDelete(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -137,7 +124,6 @@ apiInstance.searchDelete(id, (error, data, response) => {
 ```
 
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -153,28 +139,24 @@ null (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## searchDownload
-
-> File searchDownload(id, opts)
+<a name="searchDownload"></a>
+# **searchDownload**
+> &#x27;Blob&#x27; searchDownload(id, opts)
 
 Download search results
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
 let id = "id_example"; // String | ID of the search job.
-let opts = {
+let opts = { 
   'fields': "fields_example", // String | Fields to include in the response. If not specified, all fields are included.
   'latest': true // Boolean | Whether to download the latest version of each record.
 };
@@ -189,7 +171,6 @@ apiInstance.searchDownload(id, opts, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**| ID of the search job. | 
@@ -198,7 +179,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**File**
+**&#x27;Blob&#x27;**
 
 ### Authorization
 
@@ -206,27 +187,24 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json, application/zip
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/zip
 
-
-## searchGet
-
+<a name="searchGet"></a>
+# **searchGet**
 > Search searchGet(id)
 
 Get search
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
 let id = "id_example"; // String | 
+
 apiInstance.searchGet(id, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -237,7 +215,6 @@ apiInstance.searchGet(id, (error, data, response) => {
 ```
 
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -253,28 +230,24 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## searchRecords
-
+<a name="searchRecords"></a>
+# **searchRecords**
 > SearchRecordsPage searchRecords(id, opts)
 
 Read search result records
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
 let id = "id_example"; // String | ID of the search job.
-let opts = {
+let opts = { 
   'fields': "fields_example", // String | Fields to include in the response. Can be 'all' for all fields, 'name' for the name field, or a comma separated list of field names.
   'reverse': true, // Boolean | Search records in reverse order.
   'minTime': new Date("2013-10-20T19:20:30+01:00"), // Date | Minimum record time to include in the response.
@@ -292,11 +265,10 @@ apiInstance.searchRecords(id, opts, (error, data, response) => {
 
 ### Parameters
 
-
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **String**| ID of the search job. | 
- **fields** | **String**| Fields to include in the response. Can be &#39;all&#39; for all fields, &#39;name&#39; for the name field, or a comma separated list of field names. | [optional] 
+ **fields** | **String**| Fields to include in the response. Can be &#x27;all&#x27; for all fields, &#x27;name&#x27; for the name field, or a comma separated list of field names. | [optional] 
  **reverse** | **Boolean**| Search records in reverse order. | [optional] 
  **minTime** | **Date**| Minimum record time to include in the response. | [optional] 
  **maxItems** | **Number**| Maximum number of items to return per page. Fewer or zero may be returned. | [optional] 
@@ -312,27 +284,23 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
-
-## searchesList
-
+<a name="searchesList"></a>
+# **searchesList**
 > SearchesPage searchesList(opts)
 
 List searches
 
 ### Example
-
 ```javascript
-import GraxApi from 'grax_api';
+import {GraxApi} from 'grax_api';
 let defaultClient = GraxApi.ApiClient.instance;
-// Configure Bearer (GRAX Token) access token for authorization: bearer_token
-let bearer_token = defaultClient.authentications['bearer_token'];
-bearer_token.accessToken = "YOUR ACCESS TOKEN"
+
 
 let apiInstance = new GraxApi.SearchApi();
-let opts = {
+let opts = { 
   'maxItems': 56, // Number | Maximum number of items to return per page. Fewer or zero may be returned.
   'pageToken': "pageToken_example" // String | Token returned by previous call to retrieve the subsequent page.
 };
@@ -346,7 +314,6 @@ apiInstance.searchesList(opts, (error, data, response) => {
 ```
 
 ### Parameters
-
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -363,6 +330,6 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 

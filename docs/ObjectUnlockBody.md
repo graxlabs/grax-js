@@ -1,7 +1,6 @@
-# GraxApi.ErrorBody
+# GraxApi.ObjectUnlockBody
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  | [optional] 
-**message** | **String** |  | [optional] 
+**ids** | **[String]** |  | [optional] 
