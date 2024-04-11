@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "graxApi.js",
   "scripts": {
-    "build": "orval -i grax.yaml -o . && tsc graxApi.ts"
+    "build": "orval --config ./orval.config.js && tsc graxApi.ts"
   },
   "browser": {
     "fs": false
@@ -14,8 +14,11 @@
     "axios": "^1.6.8"
   },
   "devDependencies": {
-    "orval": "^6.25.0",
+    "orval": "^6.27.1",
     "typescript": "^5.4.3"
   },
-  "files": ["graxApi.js", "graxApi.ts"]
+  "files": [
+    "graxApi.js",
+    "graxApi.ts"
+  ]
 }
