@@ -76,6 +76,36 @@ export type RecordGetParams = {
 fields?: string;
 };
 
+export type RecordsListParams = {
+/**
+ * Fields to include in the response. Can be 'all' for all fields, 'name' for the name field, or a comma separated list of field names.
+ */
+fields?: string;
+/**
+ * Maximum number of items to return per page. Fewer or zero may be returned.
+ */
+maxItems?: number;
+/**
+ * Token returned by previous call to retrieve the subsequent page.
+ */
+pageToken?: string;
+};
+
+export type ObjectFieldsListParams = {
+/**
+ * Operation type. Can be 'create', 'update', or 'upsert'.
+ */
+operation?: string;
+/**
+ * Maximum number of items to return per page. Fewer or zero may be returned.
+ */
+maxItems?: number;
+/**
+ * Token returned by previous call to retrieve the subsequent page.
+ */
+pageToken?: string;
+};
+
 export type ObjectsListParams = {
 /**
  * Maximum number of items to return per page. Fewer or zero may be returned.
@@ -174,7 +204,7 @@ export interface SearchRecordsPage {
 }
 
 export interface SearchLimits {
-  /** Stop search after this many results are found. */
+  /** Stop search after this many results are found. Limited to 10 million. */
   results?: number;
 }
 
@@ -264,6 +294,13 @@ export interface Search {
   updated?: string;
 }
 
+export interface RecordsPage {
+  /** Token to retrieve the next page of results, blank if done. */
+  nextPageToken?: string;
+  /** Records. */
+  records?: Record[];
+}
+
 export interface RecordVersionsPage {
   /** Token to retrieve the next page of results, blank if done. */
   nextPageToken?: string;
@@ -289,6 +326,24 @@ export interface RecordPurged {
   /** Time the record was purged. */
   time?: string;
   user?: AuditUser;
+}
+
+export interface SearchRecord {
+  /** Time the record was created. */
+  created?: string;
+  deleted?: RecordDeleted;
+  /** Record fields. */
+  fields?: RecordField[];
+  /** Record ID. */
+  id?: string;
+  /** Time the record was modified. */
+  modified?: string;
+  /** Record name. */
+  name?: string;
+  purged?: RecordPurged;
+  restoredFrom?: RecordRestoredFrom;
+  /** Salesforce URL for the record. */
+  salesforceURL?: string;
 }
 
 export interface RecordLockID {
@@ -336,24 +391,6 @@ export interface RecordDeleted {
   user?: AuditUser;
 }
 
-export interface SearchRecord {
-  /** Time the record was created. */
-  created?: string;
-  deleted?: RecordDeleted;
-  /** Record fields. */
-  fields?: RecordField[];
-  /** Record ID. */
-  id?: string;
-  /** Time the record was modified. */
-  modified?: string;
-  /** Record name. */
-  name?: string;
-  purged?: RecordPurged;
-  restoredFrom?: RecordRestoredFrom;
-  /** Salesforce URL for the record. */
-  salesforceURL?: string;
-}
-
 export interface RecordChildrenPage {
   /** Token to retrieve the next page of results, blank if done. */
   nextPageToken?: string;
@@ -376,6 +413,24 @@ export interface Record {
   restoredFrom?: RecordRestoredFrom;
   /** Salesforce URL for the record. */
   salesforceURL?: string;
+}
+
+export interface ObjectField {
+  /** Field label. */
+  label?: string;
+  /** Field name. */
+  name?: string;
+  /** Is name field. */
+  nameField?: boolean;
+  /** Field type. */
+  type?: string;
+}
+
+export interface ObjectFieldsPage {
+  /** Fields. */
+  fields?: ObjectField[];
+  /** Token to retrieve the next page of results, blank if done. */
+  nextPageToken?: string;
 }
 
 export interface Object {
@@ -643,6 +698,45 @@ export const objectsList = <TData = AxiosResponse<ObjectsPage>>(
   }
 
 /**
+ * @summary Get object
+ */
+export const objectGet = <TData = AxiosResponse<Object>>(
+    object: string, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.get(
+      `/api/v2/objects/${object}`,options
+    );
+  }
+
+/**
+ * @summary List object fields
+ */
+export const objectFieldsList = <TData = AxiosResponse<ObjectFieldsPage>>(
+    object: string,
+    params?: ObjectFieldsListParams, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.get(
+      `/api/v2/objects/${object}/fields`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+/**
+ * @summary List records
+ */
+export const recordsList = <TData = AxiosResponse<RecordsPage>>(
+    object: string,
+    params?: RecordsListParams, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.get(
+      `/api/v2/objects/${object}/records`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+
+/**
  * @summary Get record
  */
 export const recordGet = <TData = AxiosResponse<Record>>(
@@ -770,6 +864,9 @@ export type RecordLockResult = AxiosResponse<void>
 export type RecordChildrenListResult = AxiosResponse<RecordChildrenPage>
 export type RecordsUnlockResult = AxiosResponse<void>
 export type ObjectsListResult = AxiosResponse<ObjectsPage>
+export type ObjectGetResult = AxiosResponse<Object>
+export type ObjectFieldsListResult = AxiosResponse<ObjectFieldsPage>
+export type RecordsListResult = AxiosResponse<RecordsPage>
 export type RecordGetResult = AxiosResponse<Record>
 export type RecordVersionsListResult = AxiosResponse<RecordVersionsPage>
 export type SearchesListResult = AxiosResponse<SearchesPage>

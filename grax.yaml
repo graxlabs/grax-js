@@ -531,6 +531,155 @@ paths:
       summary: List objects
       tags:
       - Objects
+  /api/v2/objects/{object}:
+    get:
+      operationId: object_get
+      parameters:
+      - description: Object name.
+        in: path
+        name: object
+        required: true
+        schema:
+          description: Object name.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Object'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: Get object
+      tags:
+      - Objects
+  /api/v2/objects/{object}/fields:
+    get:
+      operationId: object_fields_list
+      parameters:
+      - description: Operation type. Can be 'create', 'update', or 'upsert'.
+        in: query
+        name: operation
+        schema:
+          description: Operation type. Can be 'create', 'update', or 'upsert'.
+          type: string
+      - description: Maximum number of items to return per page. Fewer or zero may
+          be returned.
+        in: query
+        name: maxItems
+        schema:
+          description: Maximum number of items to return per page. Fewer or zero may
+            be returned.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - description: Object name.
+        in: path
+        name: object
+        required: true
+        schema:
+          description: Object name.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectFieldsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List object fields
+      tags:
+      - Objects
+  /api/v2/objects/{object}/records:
+    get:
+      operationId: records_list
+      parameters:
+      - description: Fields to include in the response. Can be 'all' for all fields,
+          'name' for the name field, or a comma separated list of field names.
+        in: query
+        name: fields
+        schema:
+          description: Fields to include in the response. Can be 'all' for all fields,
+            'name' for the name field, or a comma separated list of field names.
+          type: string
+      - description: Maximum number of items to return per page. Fewer or zero may
+          be returned.
+        in: query
+        name: maxItems
+        schema:
+          description: Maximum number of items to return per page. Fewer or zero may
+            be returned.
+          type: integer
+      - description: Token returned by previous call to retrieve the subsequent page.
+        in: query
+        name: pageToken
+        schema:
+          description: Token returned by previous call to retrieve the subsequent
+            page.
+          type: string
+      - description: Object name.
+        in: path
+        name: object
+        required: true
+        schema:
+          description: Object name.
+          type: string
+      responses:
+        4XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        5XX:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordsPage'
+          description: OK
+      security:
+      - bearer_token: []
+      summary: List records
+      tags:
+      - Records
   /api/v2/objects/{object}/records/{id}:
     get:
       operationId: record_get
@@ -1078,6 +1227,32 @@ components:
           description: Object name.
           type: string
       type: object
+    ObjectField:
+      properties:
+        label:
+          description: Field label.
+          type: string
+        name:
+          description: Field name.
+          type: string
+        nameField:
+          description: Is name field.
+          type: boolean
+        type:
+          description: Field type.
+          type: string
+      type: object
+    ObjectFieldsPage:
+      properties:
+        fields:
+          description: Fields.
+          items:
+            $ref: '#/components/schemas/ObjectField'
+          type: array
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+      type: object
     ObjectsPage:
       properties:
         nextPageToken:
@@ -1223,6 +1398,17 @@ components:
             $ref: '#/components/schemas/Record'
           type: array
       type: object
+    RecordsPage:
+      properties:
+        nextPageToken:
+          description: Token to retrieve the next page of results, blank if done.
+          type: string
+        records:
+          description: Records.
+          items:
+            $ref: '#/components/schemas/Record'
+          type: array
+      type: object
     Search:
       properties:
         created:
@@ -1357,7 +1543,8 @@ components:
     SearchLimits:
       properties:
         results:
-          description: Stop search after this many results are found.
+          description: Stop search after this many results are found. Limited to 10
+            million.
           type: integer
       type: object
     SearchRecord:
